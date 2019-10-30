@@ -81,7 +81,11 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
         ],
-
+        'pgsql_testing' => [
+            'driver' => 'pgsql',
+            'database' => ':memory:',
+            'prefix' => '',
+        ],
     ],
 
     /*
