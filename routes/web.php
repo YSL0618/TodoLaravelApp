@@ -15,7 +15,11 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('/folders/create', 'FolderController@showCreateForm')->name('folders.create');
     Route::post('/folders/create', 'FolderController@create');
-    
+
+    Route::get('/mypage', 'UserController@index')->name('users.index');
+    Route::get('/mypage/edit', 'UserController@showEditForm')->name('users.edit');
+    Route::post('/mypage/edit', 'UserController@editUserAccount');
+
     Route::group(['middleware' => 'can:view,folder'], function() {
         Route::get('/folders/{folder}/tasks', 'TaskController@index')->name('tasks.index');
         
@@ -25,9 +29,6 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/folders/{folder}/tasks/{task}/edit', 'TaskController@showEditForm')->name('tasks.edit');
         Route::post('/folders/{folder}/tasks/{task}/edit', 'TaskController@edit');
 
-        Route::get('mypage/', 'UserController@index')->name('users.index');
-        Route::get('mypage/edit', 'UserController@showEditForm')->name('users.edit');
-        Route::post('/mypage/edit', 'UserController@edit');
     });
 });
 
