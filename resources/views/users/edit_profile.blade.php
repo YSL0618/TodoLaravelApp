@@ -25,11 +25,12 @@
             >
               @csrf
               <div class="form-group">
-                <label for="name">名前</label>
-                <label>変更前：{{ $name }}</label>
-
+                <label for="original_name">変更前の名前</label>
+                <input type="text" class="form-control" name="original_name"
+                      value="{{ $name }}" disabled/>
+                <label for="name">変更後の名前</label>
                 <input type="text" class="form-control" name="name" id="name"
-                       value="{{ old('name') , $user->name }}" />
+                      value="{{ $name }}" />
               </div>
               <div class="text-right">
                 <button type="submit" class="btn btn-primary">送信</button>

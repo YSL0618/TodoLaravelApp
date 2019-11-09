@@ -15,7 +15,12 @@ class EditUser extends FormRequest
     {
         return true;
     }
-
+    public function attributes()
+    {
+        return [
+            'name' => '変更後の名前',
+        ];
+    }
     /**
      * Get the validation rules that apply to the request.
      *

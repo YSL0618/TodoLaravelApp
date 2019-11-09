@@ -17,20 +17,21 @@ class UserController extends Controller
             'email' => $user->email,
         ]);
     }
-    public function showEditForm()
+    public function showEditForm(User $user)
     {
         $user = Auth::user();
-        return view('users/edit', [
+
+        return view('users/edit_profile', [
             'name' => $user->name,
-            'email' => $user->email,
         ]);
     }
 
-    public function editUserAccount(User $user,EditUser $request)
+    public function editUserProfile(User $user,EditUser $request)
     {
 
+        $user = Auth::user();
         $user->name = $request->name;
         $user->save();
-        return redirect()->route('mypage');
+        return redirect()->route('users.index');
     }
 }

@@ -15,7 +15,9 @@
     <a class="my-navbar-brand" href="/">ToDo App</a>
     <div class="my-navbar-control">
       @if(Auth::check())
-        <span class="my-navbar-item">ようこそ, <a href="{{ route('users.index') }}">{{ Auth::user()->name }}</a>さん</span>
+        <span class="my-navbar-item">ようこそ, {{ Auth::user()->name }}さん</span>
+        ｜
+        <a href="{{ route('users.index') }}" class="my-navbar-item">マイページ</a>
         ｜
         <a href="#" id="logout" class="my-navbar-item">ログアウト</a>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

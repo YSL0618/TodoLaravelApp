@@ -18,7 +18,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::get('/mypage', 'UserController@index')->name('users.index');
     Route::get('/mypage/edit', 'UserController@showEditForm')->name('users.edit');
-    Route::post('/mypage/edit', 'UserController@editUserAccount');
+    Route::post('/mypage/edit', 'UserController@editUserProfile');
 
     Route::group(['middleware' => 'can:view,folder'], function() {
         Route::get('/folders/{folder}/tasks', 'TaskController@index')->name('tasks.index');
