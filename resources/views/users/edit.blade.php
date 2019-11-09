@@ -18,6 +18,7 @@
                 @endforeach
               </div>
             @endif
+            
             <form
                 action="{{ route('users.edit')}}"
                 method="POST"
@@ -25,10 +26,10 @@
               @csrf
               <div class="form-group">
                 <label for="name">名前</label>
-                <label>変更前：{{ $user->name }}</label>
+                <label>変更前：{{ $name }}</label>
 
                 <input type="text" class="form-control" name="name" id="name"
-                       value="{{ old('name') ?? $user->name }}" />
+                       value="{{ old('name') , $user->name }}" />
               </div>
               <div class="text-right">
                 <button type="submit" class="btn btn-primary">送信</button>
