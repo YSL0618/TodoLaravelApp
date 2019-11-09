@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function index()
+    public function showIndexPage()
     {
         $user = Auth::user();
 
-        return view('users/index', [
+        return view('users/my_profile_index', [
             'name' => $user->name,
             'email' => $user->email,
         ]);

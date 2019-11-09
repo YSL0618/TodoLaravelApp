@@ -16,7 +16,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/folders/create', 'FolderController@showCreateForm')->name('folders.create');
     Route::post('/folders/create', 'FolderController@create');
 
-    Route::get('/mypage', 'UserController@index')->name('users.index');
+    Route::get('/mypage', 'UserController@showIndexPage')->name('users.index');
     Route::get('/mypage/edit', 'UserController@showEditForm')->name('users.edit');
     Route::post('/mypage/edit', 'UserController@editUserProfile');
 
