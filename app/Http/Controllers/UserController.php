@@ -17,7 +17,7 @@ class UserController extends Controller
             'email' => $user->email,
         ]);
     }
-    public function showEditForm(User $user)
+    public function showEditForm()
     {
         $user = Auth::user();
 
@@ -26,7 +26,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function editUserProfile(User $user,EditUser $request)
+    public function editUserProfile(EditUser $request)
     {
 
         $user = Auth::user();
