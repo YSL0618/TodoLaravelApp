@@ -45,7 +45,13 @@
             <tbody>
             @foreach($tasks as $task)
               <tr>
-                <td>{{ $task->title }}</td>
+                <td>
+                
+                <a href="{{ route('tasks.showinfo', ['id' => $task->folder_id, 'task_id' => $task->id]) }}">
+                {{ $task->title }}
+                </a>
+                
+                </td>
                 <td>
                   <span class="label {{ $task->status_class }}">{{ $task->status_label }}</span>
                 </td>

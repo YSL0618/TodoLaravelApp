@@ -5,9 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>ToDo App</title>
-
+  <meta property="og:title" content="ToDo App" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{request()->fullUrl()}}" />
+  <meta property="og:site_name" content="ToDo App" />
+  <meta property="og:description" content=""ToDo Appでタスクを管理しよう！" />
   @yield('styles')
   <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/bootstrap-social.css">
 </head>
 <body>
 <header>

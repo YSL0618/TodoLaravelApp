@@ -60,6 +60,15 @@ class TaskController extends Controller
         ]);
     }
 
+    public function showTaskInfo(Folder $folder, Task $task)
+    {
+        if ($folder->id !== $task->folder_id) {
+            abort(404);
+        }
+        return view('tasks/show_info', [
+            'task' => $task,
+        ]);
+    }
 
     public function edit(Folder $folder, Task $task, EditTask $request)
     {
