@@ -65,7 +65,6 @@ class TaskController extends Controller
         if ($folder->id !== $task->folder_id) {
             abort(404);
         }
-        $user_who_made_task = $folder;
         return view('tasks/show_info', [
             'task' => $task,
             'folder' => $folder,
