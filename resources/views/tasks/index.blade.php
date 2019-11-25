@@ -40,26 +40,18 @@
               <th>状態</th>
               <th>期限</th>
               <th></th>
-              <th></th>
             </tr>
             </thead>
             <tbody>
             @foreach($tasks as $task)
               <tr>
-                <td>
-                {{ $task->title }}
-                </td>
+                <td>{{ $task->title }}</td>
                 <td>
                   <span class="label {{ $task->status_class }}">{{ $task->status_label }}</span>
                 </td>
                 <td>{{ $task->formatted_due_date }}</td>
                 <td>
-                <a href="{{ route('tasks.showinfo', ['id' => $task->folder_id, 'task_id' => $task->id]) }}" class="btn btn-primary btn-xs">
-                  シェア
-                </a>
-                </td>
-                <td>
-                <a href="{{ route('tasks.edit', ['id' => $task->folder_id, 'task_id' => $task->id]) }}" class="btn btn-primary btn-xs">
+                <a href="{{ route('tasks.edit', ['id' => $task->folder_id, 'task_id' => $task->id]) }}">
                   編集
                 </a>
                 </td>
