@@ -18,20 +18,20 @@
                 @endforeach
               </div>
             @endif
-            <form
-                action="{{ route('tasks.edit', ['id' => $task->folder_id, 'task_id' => $task->id]) }}"
-                method="POST"
-            >
-              @csrf
               <div class="form-group">
                 <label for="title">タイトル</label>
                 
                 <p>{{  $task->title }}</p>
               </div>
               <div class="form-group">
+                <label for="status">フォルダ</label>
+                <p>
+                {{ $folder->title }}</p>
+              </div>
+              <div class="form-group">
                 <label for="status">状態</label>
                 <p>
-                {{ $task->status_label  }}</p>
+                {{ $task->status_label }}</p>
               </div>
               <div class="form-group">
                 <label for="due_date">期限</label>
@@ -53,7 +53,6 @@
                   </div>
                 </div>
               </div>
-            </form>
           </div>
         </nav>
       </div>
