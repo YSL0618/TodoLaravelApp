@@ -44,3 +44,24 @@ a.my-navbar-item:hover {
 .form-control[readonly] {
   background-color: #fff;
 }
+
+.fb-like { /* Facebook */
+  display: inline-block;
+  height: 200px;
+  overflow: hidden;
+}
+.fb_iframe_widget span {
+  vertical-align: top !important;
+}
+#___plusone_0, #___plusone_0 iframe { /* Google+ */
+  width: 70px !important;
+}
+.pocket-btn { /* Pocket */
+  display: inline-block;
+  height: 20px;
+  overflow: hidden;
+}
+.pocket-btn iframe { /* Pocket */
+  width: 100px !important;
+  overflow: hidden;
+}

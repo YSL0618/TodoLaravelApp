@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/folders/{folder}/tasks/info/{task}', 'TaskController@showTaskInfo')->name('tasks.showinfo');
+
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/', 'HomeController@index')->name('home');
 
