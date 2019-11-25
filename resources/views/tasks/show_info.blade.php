@@ -24,11 +24,6 @@
                 <p>{{  $task->title }}</p>
               </div>
               <div class="form-group">
-                <label for="status">フォルダ</label>
-                <p>
-                {{ $folder->title }}</p>
-              </div>
-              <div class="form-group">
                 <label for="status">状態</label>
                 <p>
                 {{ $task->status_label }}</p>

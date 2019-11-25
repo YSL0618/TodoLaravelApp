@@ -11,6 +11,24 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
+
+    
+    public function block(Folder $folder)
+    {
+        if (Auth::user()->id !== $folder->user_id) {
+            abort(403);
+        }
+        $folders = Auth::user()->folders()->get();
+
+        $tasks = $folder->tasks()->get();
+
+        return view('tasks/index', [
+            'folders' => $folders,
+            'current_folder_id' => $folder->id,
+            'tasks' => $tasks,
+        ]);
+    }
+
     public function index(Folder $folder)
     {
         if (Auth::user()->id !== $folder->user_id) {
@@ -52,9 +70,7 @@ class TaskController extends Controller
     
     public function showEditForm(Folder $folder, Task $task)
     {
-        if ($folder->id !== $task->folder_id) {
-            abort(404);
-        }
+        $this->verifyFolderAndTask($folder , $task);
         return view('tasks/edit', [
             'task' => $task,
         ]);
@@ -62,20 +78,15 @@ class TaskController extends Controller
 
     public function showTaskInfo(Folder $folder, Task $task)
     {
-        if ($folder->id !== $task->folder_id) {
-            abort(404);
-        }
+        $this->verifyFolderAndTask($folder , $task);
         return view('tasks/show_info', [
             'task' => $task,
-            'folder' => $folder,
         ]);
     }
 
     public function edit(Folder $folder, Task $task, EditTask $request)
     {
-        if ($folder->id !== $task->folder_id) {
-            abort(404);
-        }
+        $this->verifyFolderAndTask($folder , $task);
         $task->title = $request->title;
         $task->status = $request->status;
         $task->due_date = $request->due_date;
@@ -84,5 +95,11 @@ class TaskController extends Controller
         return redirect()->route('tasks.index', [
             'id' => $task->folder_id,
         ]);
+    }
+    private function verifyFolderAndTask(Folder $folder, Task $task)
+    {
+        if($folder->id !== $task->folder_id) {
+            abort(404);
+        }
     }
 }
