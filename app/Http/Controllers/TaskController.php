@@ -9,10 +9,16 @@ use App\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Repositories\Task\TaskRepositoryInterface;
+
 class TaskController extends Controller
 {
 
-    
+    public function __construct(TaskRepositoryInterface $task_repository)
+    {
+        $this->task_repository = $task_repository;
+    }
+
     public function block(Folder $folder)
     {
         if (Auth::user()->id !== $folder->user_id) {
@@ -80,7 +86,7 @@ class TaskController extends Controller
     {
         $this->verifyFolderAndTask($folder , $task);
         return view('tasks/show_info', [
-            'task' => $task,
+            'task' => $this->task_repository->getRecordByID($task),
         ]);
     }
 
