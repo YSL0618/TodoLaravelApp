@@ -22,8 +22,8 @@ class TaskRepository implements TaskRepositoryInterface
      * @var $task
      * @return object
      */
-    public function getRecordByID($task)
+    public function getRecordByShare($task)
     {
-        return $this->task->where('id', '=', $task)->first();
+        return $this->task->where('id', '=', $task->share)->first();
     }
 }

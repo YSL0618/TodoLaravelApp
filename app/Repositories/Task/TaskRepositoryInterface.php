@@ -9,5 +9,5 @@ interface TaskRepositoryInterface
      * @var string $task
      * @return object
      */
-    public function getRecordByID($task);
+    public function getRecordByShare($task);
 }
