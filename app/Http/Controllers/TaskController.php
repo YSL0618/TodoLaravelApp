@@ -43,7 +43,11 @@ class TaskController extends Controller
         $folders = Auth::user()->folders()->get();
 
         $tasks = $folder->tasks()->get();
-
+        foreach ($tasks as $task){
+            if (is_null($task->share)){
+                $this->task_repository->createTaskShare($task);
+            }
+        }
         return view('tasks/index', [
             'folders' => $folders,
             'current_folder_id' => $folder->id,
@@ -82,13 +86,22 @@ class TaskController extends Controller
         ]);
     }
 
-    public function showTaskInfo(Folder $folder, Task $task)
+
+    public function showTaskShare($share)
     {
-        $this->verifyFolderAndTask($folder , $task);
-        return view('tasks/show_info', [
-            'task' => $this->task_repository->getRecordByID($task),
+        $task = $this->task_repository->getRecordByShare($share);
+        return view('tasks/show_share', [
+            'task' => $task,
         ]);
     }
+
+    // public function showTaskInfo(Folder $folder, Task $task)
+    // {
+    //     $this->verifyFolderAndTask($folder , $task);
+    //     return view('tasks/show_info', [
+    //         'task' => $this->task_repository->getRecordByID($task),
+    //     ]);
+    // }
 
     public function edit(Folder $folder, Task $task, EditTask $request)
     {

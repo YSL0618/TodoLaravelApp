@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repositories\Task;
+use App\Folder;
 
 use App\Task;
 
@@ -22,8 +23,18 @@ class TaskRepository implements TaskRepositoryInterface
      * @var $task
      * @return object
      */
-    public function getRecordByShare($task)
+    public function getRecordByShare($share)
     {
-        return $this->task->where('id', '=', $task->share)->first();
+        return Task::where('share', $share)->first();
+    }
+
+    public function createTaskShare($task)
+    {
+        $prefix = (string)rand(1000,9999).(string)$task->id;
+        
+        $share = uniqid($prefix);
+        $task->share = $share;
+        $task->save();
+        return;
     }
 }

@@ -54,7 +54,7 @@
                 </td>
                 <td>{{ $task->formatted_due_date }}</td>
                 <td>
-                <a href="{{ route('tasks.showinfo', ['id' => $task->folder_id, 'task_id' => $task->id]) }}" class="btn btn-primary btn-xs">
+                <a href="{{ route('tasks.show_share', ['share' => $task->share]) }}" class="btn btn-primary btn-xs">
                   シェア
                 </a>
                 </td>
