@@ -14,7 +14,7 @@ class AddColumnShareTasksTable extends Migration
     public function up()
     {
         Schema::table('tasks', function (Blueprint $table) {
-            $table->string('share', 32)->unique()->after('status')->comment('シェア')->nullable();
+            $table->string('share', 25)->unique()->after('status')->comment('シェア')->nullable();
         });
     }
 
