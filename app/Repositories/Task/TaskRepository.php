@@ -30,7 +30,7 @@ class TaskRepository implements TaskRepositoryInterface
 
     public function ifRecordByShare($share)
     {
-        $result = Task::where('share', $share)->first()->count() > 0 ? true : false;
+        $result = Task::where('share', $share)->count() > 0 ? true : false;
         return $result;
     }
 
