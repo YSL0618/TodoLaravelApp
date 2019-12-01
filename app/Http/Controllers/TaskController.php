@@ -89,6 +89,10 @@ class TaskController extends Controller
 
     public function showTaskShare($share)
     {
+        
+        if (!$this->task_repository->isRecordByShare($share)){
+            abort(404);
+        }
         $task = $this->task_repository->getRecordByShare($share);
         return view('tasks/show_share', [
             'task' => $task,

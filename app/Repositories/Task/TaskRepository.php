@@ -28,6 +28,12 @@ class TaskRepository implements TaskRepositoryInterface
         return Task::where('share', $share)->first();
     }
 
+    public function isRecordByShare($share)
+    {
+        $result = Task::where('share', $share)->count() > 0 ? true : false;
+        return $result;
+    }
+
     public function createTaskShare($task)
     {
         $prefix = (string)rand(1000,9999).(string)$task->id;
