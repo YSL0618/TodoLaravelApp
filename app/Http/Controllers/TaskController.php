@@ -99,13 +99,6 @@ class TaskController extends Controller
         ]);
     }
 
-    // public function showTaskInfo(Folder $folder, Task $task)
-    // {
-    //     $this->verifyFolderAndTask($folder , $task);
-    //     return view('tasks/show_info', [
-    //         'task' => $this->task_repository->getRecordByID($task),
-    //     ]);
-    // }
 
     public function edit(Folder $folder, Task $task, EditTask $request)
     {
