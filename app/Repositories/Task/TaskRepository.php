@@ -4,6 +4,7 @@ namespace App\Repositories\Task;
 use App\Folder;
 
 use App\Task;
+use Illuminate\Support\Facades\DB;
 
 class TaskRepository implements TaskRepositoryInterface
 {
@@ -36,12 +37,15 @@ class TaskRepository implements TaskRepositoryInterface
 
     public function createTaskShare($task)
     {
-        $prefix = (string)rand(1000,9999).(string)$task->id;
         
-        $share = uniqid($prefix);
+        $share = $this->makeShareKey($task);
         $task->share = $share;
         $task->save();
         return $this->isRecordByShare($share);
+    }
+
+    public function makeShareKey($task){
+        return uniqid((string)rand(1000,9999).(string)$task->id);
     }
 
     public function setTaskShare()
@@ -50,9 +54,19 @@ class TaskRepository implements TaskRepositoryInterface
         $countUpdatedTasks = 0;
         foreach ($tasks as $task){
             if (is_null($task->share)){
-                if ($this->createTaskShare($task)) $countUpdatedTasks ++;
+                if ($countUpdatedTasks === 0) {                
+                    $params = [
+                    ['id' => $task->id, 'share' => $this->makeShareKey($task)],
+                ];}
+                $params = [
+                    ['first_name' => "tanaka", 'age' => 31, 'is_hungry' => 1 ],
+                ];
+                $countUpdatedTasks ++;
             }
         }
+        if ( $countUpdatedTasks > 0 )DB::table('tasks')->update($params);
+
+        
         return $countUpdatedTasks;
     }
 
