@@ -41,6 +41,19 @@ class TaskRepository implements TaskRepositoryInterface
         $share = uniqid($prefix);
         $task->share = $share;
         $task->save();
-        return;
+        return $this->isRecordByShare($share);
     }
+
+    public function setTaskShare()
+    {   
+        $tasks =Task::get();
+        $countUpdatedTasks = 0;
+        foreach ($tasks as $task){
+            if (is_null($task->share)){
+                if ($this->createTaskShare($task)) $countUpdatedTasks ++;
+            }
+        }
+        return $countUpdatedTasks;
+    }
+
 }

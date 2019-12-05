@@ -43,11 +43,6 @@ class TaskController extends Controller
         $folders = Auth::user()->folders()->get();
 
         $tasks = $folder->tasks()->get();
-        foreach ($tasks as $task){
-            if (is_null($task->share)){
-                $this->task_repository->createTaskShare($task);
-            }
-        }
         return view('tasks/index', [
             'folders' => $folders,
             'current_folder_id' => $folder->id,
