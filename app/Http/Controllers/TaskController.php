@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Folder;
 use App\Http\Requests\CreateTask;
 use App\Http\Requests\EditTask;
 use App\Task;
+use App\Folder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
