@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Task;
 use App\Folder;
+use App\Http\Requests\CreateTask;
 use Illuminate\Support\Facades\DB;
 
 use App\Task;
@@ -68,6 +69,16 @@ class TaskRepository implements TaskRepositoryInterface
         }
 
         return $count_updated_tasks;
-    }
 
+    }
+    public function createNewTask(Folder $folder, CreateTask $request)
+    {
+        $task = new Task();
+        $task->title = $request->title;
+        $task->due_date = $request->due_date;
+        $task->share = $this->generateShareKey($task);
+        $folder->tasks()->save($task);
+
+        return $this->isRecordByShare($task->share);
+}
 }
