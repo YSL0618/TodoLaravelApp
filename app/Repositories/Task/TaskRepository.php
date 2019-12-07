@@ -2,9 +2,10 @@
 
 namespace App\Repositories\Task;
 use App\Folder;
+use Illuminate\Support\Facades\DB;
 
 use App\Task;
-use Illuminate\Support\Facades\DB;
+
 class TaskRepository implements TaskRepositoryInterface
 {
     protected $task;
