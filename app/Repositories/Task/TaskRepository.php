@@ -5,6 +5,7 @@ use App\Folder;
 use Illuminate\Support\Facades\DB;
 
 use App\Task;
+use Illuminate\Support\Facades\DB;
 
 class TaskRepository implements TaskRepositoryInterface
 {
@@ -37,7 +38,12 @@ class TaskRepository implements TaskRepositoryInterface
 
     public function createTaskShare($task)
     {
+<<<<<<< HEAD
         $share = $this->generateShareKey($task);
+=======
+        
+        $share = $this->makeShareKey($task);
+>>>>>>> 1d1449bfef698e819702a4774b3941f885dae87b
         $task->share = $share;
         $task->save();
         return $this->isRecordByShare($share);
