@@ -64,7 +64,7 @@ class TaskController extends Controller
         $task = new Task();
         $task->title = $request->title;
         $task->due_date = $request->due_date;
-
+        $task->share = $this->task_repository->generateShareKey($task);
         $folder->tasks()->save($task);
 
         return redirect()->route('tasks.index', [
