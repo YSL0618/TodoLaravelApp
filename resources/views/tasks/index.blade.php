@@ -1,7 +1,17 @@
 @extends('layout')
 
 @section('content')
+<!-- フラッシュメッセージ -->
+        <script>
+@if (session('flash_message'))
+                $(function () {
+                        toastr.success('{{ session('flash_message') }}');
+                });
+@endif
+        </script>
+
   <div class="container">
+  
     <div class="row">
       <div class="col col-md-4">
         <nav class="panel panel-default">

@@ -79,6 +79,6 @@ class TaskRepository implements TaskRepositoryInterface
         $task->share = $this->generateShareKey($task);
         $folder->tasks()->save($task);
 
-        return $this->isRecordByShare($task->share);
+        return $task->id;
 }
 }

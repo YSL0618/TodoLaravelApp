@@ -61,11 +61,11 @@ class TaskController extends Controller
 
     public function create(Folder $folder, CreateTask $request)
     {
-        $this->task_repository->createNewTask( $folder, $request );
+        $new_id = $this->task_repository->createNewTask( $folder, $request );
 
         return redirect()->route('tasks.index', [
             'id' => $folder->id,
-        ]);
+        ])->with('flash_message', '新規タスクID: '.$new_id.'の作成が完了しました');
     }
 
     
