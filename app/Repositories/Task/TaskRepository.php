@@ -2,11 +2,9 @@
 
 namespace App\Repositories\Task;
 use App\Folder;
-use Illuminate\Support\Facades\DB;
 
 use App\Task;
 use Illuminate\Support\Facades\DB;
-
 class TaskRepository implements TaskRepositoryInterface
 {
     protected $task;
@@ -34,19 +32,6 @@ class TaskRepository implements TaskRepositoryInterface
     {
         $result = Task::where('share', $share)->count() > 0 ? true : false;
         return $result;
-    }
-
-    public function createTaskShare($task)
-    {
-<<<<<<< HEAD
-        $share = $this->generateShareKey($task);
-=======
-        
-        $share = $this->makeShareKey($task);
->>>>>>> 1d1449bfef698e819702a4774b3941f885dae87b
-        $task->share = $share;
-        $task->save();
-        return $this->isRecordByShare($share);
     }
 
     public function generateShareKey($task)
