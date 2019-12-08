@@ -1,7 +1,17 @@
 @extends('layout')
 
 @section('content')
+<!-- フラッシュメッセージ -->
+        <script>
+@if (session('flash_message'))
+                $(function () {
+                        toastr.success('{{ session('flash_message') }}');
+                });
+@endif
+        </script>
+
   <div class="container">
+  
     <div class="row">
       <div class="col col-md-4">
         <nav class="panel panel-default">
@@ -40,18 +50,26 @@
               <th>状態</th>
               <th>期限</th>
               <th></th>
+              <th></th>
             </tr>
             </thead>
             <tbody>
             @foreach($tasks as $task)
               <tr>
-                <td>{{ $task->title }}</td>
+                <td>
+                {{ $task->title }}
+                </td>
                 <td>
                   <span class="label {{ $task->status_class }}">{{ $task->status_label }}</span>
                 </td>
                 <td>{{ $task->formatted_due_date }}</td>
                 <td>
-                <a href="{{ route('tasks.edit', ['id' => $task->folder_id, 'task_id' => $task->id]) }}">
+                <a href="{{ route('tasks.show_share', ['share' => $task->share]) }}" class="btn btn-primary btn-xs">
+                  シェア
+                </a>
+                </td>
+                <td>
+                <a href="{{ route('tasks.edit', ['id' => $task->folder_id, 'task_id' => $task->id]) }}" class="btn btn-primary btn-xs">
                   編集
                 </a>
                 </td>
