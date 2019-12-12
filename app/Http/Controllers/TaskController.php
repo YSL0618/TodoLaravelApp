@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Folder;
 use App\Http\Requests\CreateTask;
 use App\Http\Requests\EditTask;
 use App\Task;
+use App\Folder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,11 +43,6 @@ class TaskController extends Controller
         $folders = Auth::user()->folders()->get();
 
         $tasks = $folder->tasks()->get();
-        foreach ($tasks as $task){
-            if (is_null($task->share)){
-                $this->task_repository->createTaskShare($task);
-            }
-        }
         return view('tasks/index', [
             'folders' => $folders,
             'current_folder_id' => $folder->id,
@@ -66,15 +61,11 @@ class TaskController extends Controller
 
     public function create(Folder $folder, CreateTask $request)
     {
-        $task = new Task();
-        $task->title = $request->title;
-        $task->due_date = $request->due_date;
-
-        $folder->tasks()->save($task);
+        $new_id = $this->task_repository->createNewTask( $folder, $request );
 
         return redirect()->route('tasks.index', [
             'id' => $folder->id,
-        ]);
+        ])->with('flash_message', '新規タスクID: '.$new_id.'の作成が完了しました');
     }
 
     
@@ -90,7 +81,11 @@ class TaskController extends Controller
     public function showTaskShare($share)
     {
         
+<<<<<<< HEAD
         if (!$this->task_repository->getRecordByShare($share)){
+=======
+        if (!$this->task_repository->isRecordByShare($share)){
+>>>>>>> 38512e584fa23957aefd9d4b3d3972c003124e99
             abort(404);
         }
         $task = $this->task_repository->getRecordByShare($share);
@@ -99,13 +94,6 @@ class TaskController extends Controller
         ]);
     }
 
-    // public function showTaskInfo(Folder $folder, Task $task)
-    // {
-    //     $this->verifyFolderAndTask($folder , $task);
-    //     return view('tasks/show_info', [
-    //         'task' => $this->task_repository->getRecordByID($task),
-    //     ]);
-    // }
 
     public function edit(Folder $folder, Task $task, EditTask $request)
     {
