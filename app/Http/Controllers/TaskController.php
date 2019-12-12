@@ -81,11 +81,7 @@ class TaskController extends Controller
     public function showTaskShare($share)
     {
         
-<<<<<<< HEAD
-        if (!$this->task_repository->getRecordByShare($share)){
-=======
         if (!$this->task_repository->isRecordByShare($share)){
->>>>>>> 38512e584fa23957aefd9d4b3d3972c003124e99
             abort(404);
         }
         $task = $this->task_repository->getRecordByShare($share);
@@ -94,6 +90,17 @@ class TaskController extends Controller
         ]);
     }
 
+    public function showTaskInfo(Folder $folder, Task $task)
+    {
+        if(!Auth::check())return redirect()->route('tasks.show_share', [
+            'share' => $task->share,
+        ]);
+        $this->verifyFolderAndTask($folder , $task);
+        return view('tasks/show_share', [
+            'task' => $task,
+            'folder' => $folder,
+        ]);
+    }
 
     public function edit(Folder $folder, Task $task, EditTask $request)
     {

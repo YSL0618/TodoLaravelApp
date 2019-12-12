@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+
   <div class="container">
     <div class="row">
       <div class="col col-md-offset-3 col-md-6">
@@ -31,6 +32,11 @@
                 <label for="due_date">期限</label>
                 <p>
                 {{ $task->formatted_due_date  }}</p>
+              </div>
+              <div class="form-group">
+                <label for="due_date">画像</label>
+                <p>
+                <!-- ここに添付画像を配置 --></p>
               </div>
               <!-- 情報シェアボタンを配置 -->
               

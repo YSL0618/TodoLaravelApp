@@ -69,6 +69,11 @@
                 </a>
                 </td>
                 <td>
+                <a href="{{ route('tasks.show_info', ['id' => $task->folder_id, 'task_id' => $task->id]) }}" class="btn btn-primary btn-xs">
+                  詳細
+                </a>
+                </td>
+                <td>
                 <a href="{{ route('tasks.edit', ['id' => $task->folder_id, 'task_id' => $task->id]) }}" class="btn btn-primary btn-xs">
                   編集
                 </a>
