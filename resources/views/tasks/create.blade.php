@@ -31,6 +31,11 @@
               <div class="form-group">
                 <label for="file">添付画像</label>
                 <input type="file" name="file"/>
+                @if ( $task->image_exists )
+                  <img border="0" src="{{Storage::disk('s3')->url((string)$task->id.".jpg")}}" alt="現在のイラスト">
+                @else
+                  画像なし
+                @endif
               </div>
               <div class="text-right">
                 <button type="submit" class="btn btn-primary">送信</button>

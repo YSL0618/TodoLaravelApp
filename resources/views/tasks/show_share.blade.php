@@ -41,7 +41,12 @@
               <div class="form-group">
                 <label for="due_date">画像</label>
                 <p>
-                <!-- ここに添付画像を配置 --></p>
+                @if ( $task->image_exists )
+                  <img border="0" src="{{Storage::disk('s3')->url((string)$task->id.".jpg")}}" alt="現在の画像">
+                @else
+                  画像なし
+                @endif
+                </p>
               </div>
               <!-- 情報シェアボタンを配置 -->
               

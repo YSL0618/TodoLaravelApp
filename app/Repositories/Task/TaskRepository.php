@@ -6,6 +6,7 @@ use App\Http\Requests\CreateTask;
 use App\Http\Requests\EditTask;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\File;
 
 use App\Task;
 

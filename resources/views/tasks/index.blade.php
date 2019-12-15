@@ -3,11 +3,11 @@
 @section('content')
 <!-- フラッシュメッセージ -->
         <script>
-@if (session('flash_message'))
-                $(function () {
-                        toastr.success('{{ session('flash_message') }}');
-                });
-@endif
+          @if (session('flash_message'))
+                          $(function () {
+                                  toastr.success('{{ session('flash_message') }}');
+                          });
+          @endif
         </script>
 
   <div class="container">
