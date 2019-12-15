@@ -28,6 +28,10 @@
                 <label for="due_date">期限</label>
                 <input type="text" class="form-control" name="due_date" id="due_date" value="{{ old('due_date') }}" />
               </div>
+              <div class="form-group">
+                <label for="file">添付画像</label>
+                <input type="file" name="file"/>
+              </div>
               <div class="text-right">
                 <button type="submit" class="btn btn-primary">送信</button>
               </div>

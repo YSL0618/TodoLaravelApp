@@ -34,6 +34,11 @@
                 {{ $task->formatted_due_date  }}</p>
               </div>
               <div class="form-group">
+                <label for="detail">詳細</label>
+                <p>
+                {{ $task->detail  }}</p>
+              </div>
+              <div class="form-group">
                 <label for="due_date">画像</label>
                 <p>
                 <!-- ここに添付画像を配置 --></p>

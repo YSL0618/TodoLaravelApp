@@ -3,7 +3,9 @@
 namespace App\Repositories\Task;
 use App\Folder;
 use App\Http\Requests\CreateTask;
+use App\Http\Requests\EditTask;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 use App\Task;
 
@@ -77,8 +79,29 @@ class TaskRepository implements TaskRepositoryInterface
         $task->title = $request->title;
         $task->due_date = $request->due_date;
         $task->share = $this->generateShareKey($task);
+        $task->detail = $request->detail;
         $folder->tasks()->save($task);
-
+        $this->uploadImage($task,$request);
         return $task->id;
+}
+
+    public function editTask(Folder $folder, Task $task, EditTask $request)
+    {
+        $task->title = $request->title;
+        $task->status = $request->status;
+        $task->due_date = $request->due_date;
+        $task->detail = $request->detail;
+        $task->save();
+        $this->uploadImage($task,$request);
+        return $task->id;
+}
+
+    public function uploadImage(Task $task, CreateTask $request)
+    {
+    if ($request->file('file')){
+        Storage::disk('s3')->putFileAs('/', $request->file('file'), (string)$task->id.'.jpg', 'public');
+        if (Storage::disk('s3')->exists($task->id.'.jpg'))  $task->image_exists = true;
+        return;
+    }
 }
 }

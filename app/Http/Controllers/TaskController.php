@@ -105,10 +105,7 @@ class TaskController extends Controller
     public function edit(Folder $folder, Task $task, EditTask $request)
     {
         $this->verifyFolderAndTask($folder , $task);
-        $task->title = $request->title;
-        $task->status = $request->status;
-        $task->due_date = $request->due_date;
-        $task->save();
+        $this->task_repository->editTask($folder,$task, $request);
 
         return redirect()->route('tasks.index', [
             'id' => $task->folder_id,
