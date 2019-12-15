@@ -29,10 +29,14 @@
                 <input type="text" class="form-control" name="due_date" id="due_date" value="{{ old('due_date') }}" />
               </div>
               <div class="form-group">
+                <label for="title">詳細</label>
+                <input type="text" class="form-control" name="detail" id="detail" value="{{ old('detail') }}" />
+              </div>
+              <div class="form-group">
                 <label for="file">添付画像</label>
                 <input type="file" name="file"/>
                 @if ( $task->image_exists )
-                  <img border="0" src="{{Storage::disk('s3')->url((string)$task->id.".jpg")}}" alt="現在のイラスト">
+                  <img border="0" src="{{Storage::disk('s3')->url((string)$task->id.".jpg")}}" alt="現在の画像">
                 @else
                   画像なし
                 @endif
