@@ -2,13 +2,14 @@
 
 namespace App\Repositories\Task;
 use App\Folder;
+use App\Task;
 use App\Http\Requests\CreateTask;
 use App\Http\Requests\EditTask;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
 
-use App\Task;
+
 
 class TaskRepository implements TaskRepositoryInterface
 {
@@ -81,8 +82,11 @@ class TaskRepository implements TaskRepositoryInterface
         $task->due_date = $request->due_date;
         $task->share = $this->generateShareKey($task);
         $task->detail = $request->detail;
+        if ($request->file('file')){
+            Storage::disk('s3')->putFileAs('/', $request->file('file'), (string)$task->id.'.jpg', 'public');
+            if (Storage::disk('s3')->exists($task->id.'.jpg'))  $task->image_exists = true;
+        }
         $folder->tasks()->save($task);
-        $this->uploadImage($task,$request);
         return $task->id;
 }
 
@@ -92,17 +96,16 @@ class TaskRepository implements TaskRepositoryInterface
         $task->status = $request->status;
         $task->due_date = $request->due_date;
         $task->detail = $request->detail;
+        if ($request->file('file')){
+            $path = Storage::disk('s3')->put((string)$task->id.'.jpg', $request->file('file'));
+            if (Storage::disk('s3')->exists($task->id.'.jpg'))  $task->image_exists = true;
+        }
         $task->save();
-        $this->uploadImage($task,$request);
         return $task->id;
 }
 
-    public function uploadImage(Task $task, CreateTask $request)
-    {
-    if ($request->file('file')){
-        Storage::disk('s3')->putFileAs('/', $request->file('file'), (string)$task->id.'.jpg', 'public');
-        if (Storage::disk('s3')->exists($task->id.'.jpg'))  $task->image_exists = true;
-        return;
-    }
+    public function showS3URL(Task $task){
+    $url = Storage::disk('s3')->url((string)$task->id.'.jpg');
+    return $url;
 }
 }

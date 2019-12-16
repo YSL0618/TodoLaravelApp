@@ -18,7 +18,7 @@
                 @endforeach
               </div>
             @endif
-            <form action="{{ route('tasks.create', ['id' => $folder_id]) }}" method="POST">
+            <form action="{{ route('tasks.create', ['id' => $folder_id]) }}" method="POST" enctype="multipart/form-data">
               @csrf
               <div class="form-group">
                 <label for="title">タイトル</label>
@@ -35,11 +35,6 @@
               <div class="form-group">
                 <label for="file">添付画像</label>
                 <input type="file" name="file"/>
-                @if ( $task->image_exists )
-                  <img border="0" src="{{Storage::disk('s3')->url((string)$task->id.".jpg")}}" alt="現在の画像">
-                @else
-                  画像なし
-                @endif
               </div>
               <div class="text-right">
                 <button type="submit" class="btn btn-primary">送信</button>

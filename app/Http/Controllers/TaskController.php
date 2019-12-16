@@ -72,8 +72,10 @@ class TaskController extends Controller
     public function showEditForm(Folder $folder, Task $task)
     {
         $this->verifyFolderAndTask($folder , $task);
+        $image = $this->task_repository->showS3URL( $task );
         return view('tasks/edit', [
             'task' => $task,
+            'image' => $image,
         ]);
     }
 
@@ -84,9 +86,11 @@ class TaskController extends Controller
         if (!$this->task_repository->isRecordByShare($share)){
             abort(404);
         }
+        $image = $this->task_repository->showS3URL( $task );
         $task = $this->task_repository->getRecordByShare($share);
         return view('tasks/show_share', [
             'task' => $task,
+            'image' => $image,
         ]);
     }
 
@@ -95,10 +99,12 @@ class TaskController extends Controller
         if(!Auth::check())return redirect()->route('tasks.show_share', [
             'share' => $task->share,
         ]);
+        $image = $this->task_repository->showS3URL( $task );
         $this->verifyFolderAndTask($folder , $task);
         return view('tasks/show_share', [
             'task' => $task,
             'folder' => $folder,
+            'image' => $image ,
         ]);
     }
 

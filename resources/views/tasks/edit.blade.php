@@ -21,6 +21,7 @@
             <form
                 action="{{ route('tasks.edit', ['id' => $task->folder_id, 'task_id' => $task->id]) }}"
                 method="POST"
+                enctype="multipart/form-data"
             >
               @csrf
               <div class="form-group">
@@ -30,7 +31,7 @@
               </div>
               <div class="form-group">
                 <label for="status">状態</label>
-                <select name="status" id="status" class="form-control">
+                <select name="status" id="status" class="form-control" >
                   @foreach(\App\Task::STATUS as $key => $val)
                     <option
                         value="{{ $key }}"
@@ -56,7 +57,7 @@
 
                 <input type="file" name="file"/>
                 @if ( $task->image_exists )
-                  <img border="0" src="{{Storage::disk('s3')->url((string)$task->id.".jpg")}}" alt="現在の画像">
+                  <img border="0" src="{{$image}}" alt="現在の画像">
                 @else
                   画像なし
                 @endif
