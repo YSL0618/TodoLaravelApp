@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddImageExistsToTasksTable extends Migration
+class AddImageNameToTasksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class AddImageExistsToTasksTable extends Migration
     {
         Schema::table('tasks', function (Blueprint $table) {
             //
-            $table->boolean('image_exists')->after('detail')->default(false);
+            $table->string('image_name, 12')->after('detail')->comment('イメージファイル名')->nullable();
         });
     }
 
@@ -27,8 +27,8 @@ class AddImageExistsToTasksTable extends Migration
     public function down()
     {
         Schema::table('tasks', function (Blueprint $table) {
-            $table->dropColumn('image_exists');
             //
+            $table->dropColumn('image_name');
         });
     }
 }

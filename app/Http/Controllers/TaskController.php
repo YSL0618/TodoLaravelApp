@@ -96,9 +96,11 @@ class TaskController extends Controller
 
     public function showTaskInfo(Folder $folder, Task $task)
     {
-        if(!Auth::check())return redirect()->route('tasks.show_share', [
-            'share' => $task->share,
-        ]);
+        if(!Auth::check()) {
+                return redirect()->route('tasks.show_share', [
+                'share' => $task->share,
+            ]);
+        }
         $image = $this->task_repository->showS3URL( $task );
         $this->verifyFolderAndTask($folder , $task);
         return view('tasks/show_share', [
