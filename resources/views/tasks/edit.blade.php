@@ -56,7 +56,7 @@
                 <label for="file">添付画像</label>
 
                 <input type="file" name="file"/>
-                @if ( $task->image_exists )
+                @if ( $task->image_name )
                   <img border="0" src="{{$image}}" alt="現在の画像">
                 @else
                   画像なし

@@ -41,7 +41,7 @@
               <div class="form-group">
                 <label for="due_date">画像</label>
                 <p>
-                @if ( $task->image_exists )
+                @if ( $task->image_name )
                   <img src="{{$image}}" alt="現在の画像">
                 @else
                   画像なし

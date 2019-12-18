@@ -92,7 +92,7 @@ class TaskRepository implements TaskRepositoryInterface
         return $task->id;
 }
 
-    public function editTask(Task $task, EditTask $request)
+    public function editTask(Folder $folder, Task $task, EditTask $request)
     {
         $task->title = $request->title;
         $task->status = $request->status;
@@ -109,7 +109,11 @@ class TaskRepository implements TaskRepositoryInterface
 
     public function showS3URL(Task $task)
     {
-        $url = Storage::disk('s3')->url($task->image_name);
+        if($task->image_name){
+            $url = Storage::disk('s3')->url($task->image_name);
+        }else {
+            $url = "";
+        }
         return $url;
     }
 }

@@ -15,7 +15,7 @@ class AddImageNameToTasksTable extends Migration
     {
         Schema::table('tasks', function (Blueprint $table) {
             //
-            $table->string('image_name, 12')->after('detail')->comment('イメージファイル名')->nullable();
+            $table->string('image_name', 12)->after('detail')->comment('イメージファイル名')->nullable();
         });
     }
 
