@@ -126,9 +126,13 @@ class TaskRepository implements TaskRepositoryInterface
 
     
     public function deleteImage(Task $task, EditTask $request)
-    {
+    {   $result = true ;
         if ($request->has('file') && Storage::disk('s3')->exists($task->image_url)) {
-            $result = Storage::disk('s3')->delete($task->image_url);
+            $image_file = preg_replace ('/([^/]+?)?$/','{1}',$task->image_url);
+            $result = Storage::disk('s3')->delete($image_file);
+            if ($result) {
+                throw new Exception('ファイルの削除に失敗しました');
+            }
         }
         return $result;
     }
