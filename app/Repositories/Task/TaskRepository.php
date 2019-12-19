@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
 
+use Exception;
+
 
 
 class TaskRepository implements TaskRepositoryInterface
@@ -82,11 +84,9 @@ class TaskRepository implements TaskRepositoryInterface
         $task->due_date = $request->due_date;
         $task->share = $this->generateShareKey($task);
         $task->detail = $request->detail;
-        
-        if ($request->file('file')){
-            $image_name = (string)$task->id.'.jpg';
-            $path = Storage::disk('s3')->put($image_name, $request->file('file'));
-            if (Storage::disk('s3')->exists($image_name))  $task->image_name = $image_name;
+        $requested_file = $request->file('file');
+        if ($requested_file){
+            $task->image_url = Storage::disk('s3')->url($this->uploadImage($task,$requested_file));
         }
         $folder->tasks()->save($task);
         return $task->id;
@@ -98,22 +98,38 @@ class TaskRepository implements TaskRepositoryInterface
         $task->status = $request->status;
         $task->due_date = $request->due_date;
         $task->detail = $request->detail;
-        if ($request->file('file')){
-            $image_name = (string)$task->id.'.jpg';
-            $path = Storage::disk('s3')->put($image_name, $request->file('file'));
-            if (Storage::disk('s3')->exists($image_name))  $task->image_name = $image_name;
+        $requested_file = $request->file('file');
+        if ($requested_file){
+            $this->deleteImage($task,$request);
+            $task->image_url = Storage::disk('s3')->url($this->uploadImage($task,$requested_file));
         }
         $task->save();
         return $task->id;
 }
 
-    public function showS3URL(Task $task)
-    {
-        if($task->image_name){
-            $url = Storage::disk('s3')->url($task->image_name);
-        }else {
-            $url = "";
+    public function uploadImage(Task $task,$requested_file) 
+    {   
+        if ($requested_file){
+            if(preg_match('/jpg$|jpeg$|gif$|png$/',$requested_file->extension())){
+                $image_url = (string)$task->id.'.'.$requested_file->extension();
+            } else {
+                throw new Exception('.jpg .png .gif以外の画像のみアップロード可能です　アップロードファイルの拡張子: '.$requested_file->extension());
+            }
+            $path = Storage::disk('s3')->put($image_url, $requested_file);
+            if (empty($path)) {
+                throw new Exception('ファイルのアップロードに失敗しました');
+            }
         }
-        return $url;
+        return $path;
+    }
+    
+
+    
+    public function deleteImage(Task $task, EditTask $request)
+    {
+        if ($request->has('file') && Storage::disk('s3')->exists($task->image_url)) {
+            $result = Storage::disk('s3')->delete($task->image_url);
+        }
+        return $result;
     }
 }

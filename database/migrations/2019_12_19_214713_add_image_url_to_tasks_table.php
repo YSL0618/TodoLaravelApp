@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddImageNameToTasksTable extends Migration
+class AddImageUrlToTasksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class AddImageNameToTasksTable extends Migration
     {
         Schema::table('tasks', function (Blueprint $table) {
             //
-            $table->string('image_name', 12)->after('detail')->comment('イメージファイル名')->nullable();
+            $table->string('image_url')->after('detail')->comment('イメージファイル名')->nullable();
         });
     }
 
@@ -28,7 +28,7 @@ class AddImageNameToTasksTable extends Migration
     {
         Schema::table('tasks', function (Blueprint $table) {
             //
-            $table->dropColumn('image_name');
+            $table->dropColumn('image_url');
         });
     }
 }

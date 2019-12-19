@@ -8,6 +8,7 @@ use App\Task;
 use App\Folder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Exception;
 
 use App\Repositories\Task\TaskRepositoryInterface;
 
@@ -72,10 +73,8 @@ class TaskController extends Controller
     public function showEditForm(Folder $folder, Task $task)
     {
         $this->verifyFolderAndTask($folder , $task);
-        $image = $this->task_repository->showS3URL( $task );
         return view('tasks/edit', [
             'task' => $task,
-            'image' => $image,
         ]);
     }
 
@@ -87,10 +86,8 @@ class TaskController extends Controller
             abort(404);
         }
         $task = $this->task_repository->getRecordByShare($share);
-        $image = $this->task_repository->showS3URL( $task );
         return view('tasks/show_share', [
             'task' => $task,
-            'image' => $image,
         ]);
     }
 
@@ -102,19 +99,20 @@ class TaskController extends Controller
             ]);
         }
         $this->verifyFolderAndTask($folder , $task);
-        $image = $this->task_repository->showS3URL( $task );
         return view('tasks/show_share', [
             'task' => $task,
             'folder' => $folder,
-            'image' => $image ,
         ]);
     }
 
     public function edit(Folder $folder, Task $task, EditTask $request)
     {
         $this->verifyFolderAndTask($folder , $task);
-        $this->task_repository->editTask($folder,$task, $request);
-
+        try {
+            $this->task_repository->editTask($folder,$task, $request);
+        } catch(Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
         return redirect()->route('tasks.index', [
             'id' => $task->folder_id,
         ]);
