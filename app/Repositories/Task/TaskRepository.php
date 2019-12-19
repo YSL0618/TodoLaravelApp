@@ -113,7 +113,7 @@ class TaskRepository implements TaskRepositoryInterface
             if(preg_match('/jpg$|jpeg$|gif$|png$/',$requested_file->extension())){
                 $image_url = (string)$task->id.'.'.$requested_file->extension();
             } else {
-                throw new Exception('.jpg .png .gif以外の画像のみアップロード可能です　アップロードファイルの拡張子: '.$requested_file->extension());
+                throw new Exception('.jpg .png .gifの画像のみアップロード可能です　アップロードファイルの拡張子: '.$requested_file->extension());
             }
             $path = Storage::disk('s3')->put($image_url, $requested_file);
             if (empty($path)) {
