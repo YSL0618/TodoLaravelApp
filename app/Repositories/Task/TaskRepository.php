@@ -110,7 +110,7 @@ class TaskRepository implements TaskRepositoryInterface
     public function uploadImage(Task $task,$requested_file) 
     {   
         if ($requested_file){
-            $extentions_list = array("jpg","jpeg","gif","png");
+            $extentions_list = [ "jpg","jpeg","gif","png" ];
             if(in_array($requested_file->extension(),$extentions_list)){
                 $image_url = (string)$task->id.'.'.$requested_file->extension();
             } else {
@@ -127,7 +127,8 @@ class TaskRepository implements TaskRepositoryInterface
 
     
     public function deleteImage(Task $task, EditTask $request)
-    {   $result = true ;
+    {
+        $result = true ;
         if ($request->has('file') && Storage::disk('s3')->exists($task->image_url)) {
             $image_file = preg_replace ('/([^/]+?)?$/','{1}',$task->image_url);
             $result = Storage::disk('s3')->delete($image_file);
