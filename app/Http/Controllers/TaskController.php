@@ -8,6 +8,7 @@ use App\Task;
 use App\Folder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Exception;
 
 use App\Repositories\Task\TaskRepositoryInterface;
 
@@ -90,15 +91,28 @@ class TaskController extends Controller
         ]);
     }
 
+    public function showTaskInfo(Folder $folder, Task $task)
+    {
+        if(!Auth::check()) {
+                return redirect()->route('tasks.show_share', [
+                'share' => $task->share,
+            ]);
+        }
+        $this->verifyFolderAndTask($folder , $task);
+        return view('tasks/show_share', [
+            'task' => $task,
+            'folder' => $folder,
+        ]);
+    }
 
     public function edit(Folder $folder, Task $task, EditTask $request)
     {
         $this->verifyFolderAndTask($folder , $task);
-        $task->title = $request->title;
-        $task->status = $request->status;
-        $task->due_date = $request->due_date;
-        $task->save();
-
+        try {
+            $this->task_repository->editTask($folder,$task, $request);
+        } catch(Exception $e) {
+            return back()->withErrors($e->getMessage());
+        }
         return redirect()->route('tasks.index', [
             'id' => $task->folder_id,
         ]);

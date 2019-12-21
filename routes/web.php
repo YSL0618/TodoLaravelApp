@@ -10,7 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/folders/share/{share}/', 'TaskController@showTaskShare')->name('tasks.show_share');
+Route::get('/folders/share/{share}', 'TaskController@showTaskShare')->name('tasks.show_share');
+
+Route::get('/folders/{folder}/tasks/{task}/show_info', 'TaskController@showTaskInfo')->name('tasks.show_info');
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/', 'HomeController@index')->name('home');

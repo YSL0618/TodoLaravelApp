@@ -21,6 +21,7 @@
             <form
                 action="{{ route('tasks.edit', ['id' => $task->folder_id, 'task_id' => $task->id]) }}"
                 method="POST"
+                enctype="multipart/form-data"
             >
               @csrf
               <div class="form-group">
@@ -30,7 +31,7 @@
               </div>
               <div class="form-group">
                 <label for="status">状態</label>
-                <select name="status" id="status" class="form-control">
+                <select name="status" id="status" class="form-control" >
                   @foreach(\App\Task::STATUS as $key => $val)
                     <option
                         value="{{ $key }}"
@@ -45,6 +46,21 @@
                 <label for="due_date">期限</label>
                 <input type="text" class="form-control" name="due_date" id="due_date"
                        value="{{ old('due_date') ?? $task->formatted_due_date }}" />
+              </div>
+              <div class="form-group">
+                <label for="detail"">詳細</label>
+                <input type="text" class="form-control" name="detail" id="detail"
+                      value="{{ old('detail') ?? $task->detail }}" />
+              </div>
+              <div class="form-group">
+                <label for="file">添付画像</label>
+
+                <input type="file" name="file"/>
+                @if ( $task->image_url )
+                  <img border="0" src="{{$task->image_url}}" alt="現在の画像">
+                @else
+                  画像なし
+                @endif
               </div>
               <div class="text-right">
                 <button type="submit" class="btn btn-primary">送信</button>

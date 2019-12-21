@@ -3,11 +3,11 @@
 @section('content')
 <!-- フラッシュメッセージ -->
         <script>
-@if (session('flash_message'))
-                $(function () {
-                        toastr.success('{{ session('flash_message') }}');
-                });
-@endif
+          @if (session('flash_message'))
+                          $(function () {
+                                  toastr.success('{{ session('flash_message') }}');
+                          });
+          @endif
         </script>
 
   <div class="container">
@@ -66,6 +66,11 @@
                 <td>
                 <a href="{{ route('tasks.show_share', ['share' => $task->share]) }}" class="btn btn-primary btn-xs">
                   シェア
+                </a>
+                </td>
+                <td>
+                <a href="{{ route('tasks.show_info', ['id' => $task->folder_id, 'task_id' => $task->id]) }}" class="btn btn-primary btn-xs">
+                  詳細
                 </a>
                 </td>
                 <td>
